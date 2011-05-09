@@ -76,14 +76,17 @@
 				var ctx = canvas.getContext("2d");
 			
 				var drum1 = new clickableShape({
-					drawFunction: drawRectangleFunctionFactory("#ff0000", 0.5, 0.5, 50, 50),
+					drawFunction: function(pCtx) {
+						pCtx.fillStyle = "#ff0000";
+						pCtx.rect(0.5, 0.5, 50, 50);
+					},
 					
 					clickFunction: function(){
 						playAudio("audioBongo");
 					},
 					
-					closeFunction: function() {
-						ctx.fill();
+					closeFunction: function(pCtx) {
+						pCtx.fill();
 					}				
 				});
 				
@@ -94,10 +97,10 @@
 						playAudio("audioHihat");
 					},
 					
-					closeFunction: function() {
-						ctx.strokeStyle="#00ff00";
-						ctx.lineWidth = 4;
-						ctx.stroke()
+					closeFunction: function(pCtx) {
+						pCtx.strokeStyle="#00ff00";
+						pCtx.lineWidth = 4;
+						pCtx.stroke()
 					}				
 				});
 				
@@ -108,8 +111,8 @@
 						playAudio("audioCowbell");
 					},
 					
-					closeFunction: function() {
-						ctx.fill();
+					closeFunction: function(pCtx) {
+						pCtx.fill();
 					}				
 				});
 
@@ -120,17 +123,19 @@
 						playAudio("audioDrum");
 					},
 					
-					closeFunction: function() {						
-						ctx.fill();
-						ctx.fillStyle="#fff";
-						ctx.font = "bold 64px sans-serif";
-						ctx.fillText("Some text too.", 166.5, 49);
+					closeFunction: function(pCtx) {						
+						pCtx.fill();
+						pCtx.fillStyle="#fff";
+						pCtx.font = "bold 64px sans-serif";
+						pCtx.fillText("Some text too.", 166.5, 49);
 					}				
 				});
 			
-				helper = new canvasEventHelper();		
-				helper.context = ctx;
-				helper.eventAwareShapes = [drum1,drum2,drum3, drum4];
+				helper = new canvasEventHelper({
+					context: ctx,
+					eventAwareShapes: [drum1, drum2, drum3, drum4]
+				});		
+
 				helper.drawShapes();
 		
 				
@@ -198,14 +203,17 @@
 	...
 	
 	var drum1 = new clickableShape({
-		drawFunction: drawRectangleFunctionFactory("#ff0000", 0.5, 0.5, 50, 50),
+		drawFunction: function(pCtx) {
+			pCtx.fillStyle = "#ff0000";
+			pCtx.rect(0.5, 0.5, 50, 50);
+		},
 		
 		clickFunction: function(){
 			playAudio("audioBongo");
 		},
 		
-		closeFunction: function() {
-			ctx.fill();
+		closeFunction: function(pCtx) {
+			pCtx.fill();
 		}				
 	});
 	
@@ -216,9 +224,9 @@
 						What we're doing is creating a new <code>clickableShape</code> object and setting some properties on it to define how we want the object to be drawn.  Lets take a closer look at those properties.
 						<ul>
 							<li>
-								<strong>drawFunction</strong> is the function that is used to draw the actual shape on the screen.  Here we've used a factory to take advantage of JavaScript's closure functionality to ensure that the variables we provide it here are kept in scope when its subsequently redrawn.  
+								<strong>drawFunction</strong> is the function that is used to draw the actual shape on the screen.  Canvas Event Helper relies on the paths to detect mouse clicks so make sure that there are not any methods that close the path (e.g. fill(), stroke(), closePath() and even fillRect()) in the drawFunction or click detection might not work as you expected it to (or at all!) for that object.
 								<br /><br />
-								Canvas Event Helper relies on the path not being closed in order to detect clicks etc - make sure that there are not any methods that close the path (e.g. fill(), stroke(), closePath() and even fillRect()) in the drawFunction or click detection might not work as you expected it to (or at all!) for that object.
+								Canvas Event Helper will automatically start a path for you with beginPath() so you wont need to do that yourself in the drawFunction.
 								<br /><br />
 							</li>
 							<li>
@@ -230,11 +238,12 @@
 								<br /><br />
 							</li>
 						</ul>
+						CanvasEventHelper will always call drawFunction first, and always call closeFunction last.  It may call the clickFunction inbetween if there was a click found in the shape's path.
 					</p>
 				</li>
 				<li>
 					<p>
-						Now that we've created the first red square, we can go on to create all of the other shapes we want to handle.  I wont bother discussing those but feel free to check out the source of this page for what was done.
+						Now that we've created the first red square, we can go on to create all of the other shapes we want to handle.  I wont bother discussing those but feel free to check out the source of this page for what was done.  Note that although drum1 was drawn with a dedicated drawFunction, the others call a "function factory" to use closures to generate functions with different parameters to remove duplicated code.  Javascript is awesome for this sort of thing!
 					</p>
 				</li>
 				<li>
@@ -248,16 +257,18 @@
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	
-	helper = new canvasEventHelper();		
-	helper.context = ctx;
-	helper.eventAwareShapes = [drum1, drum2, drum3, drum4];
-	helper.drawShapes();
+	helper = new canvasEventHelper({
+		context: ctx,
+		eventAwareShapes: [drum1, drum2, drum3, drum4]
+	});		
+
+	helper.drawShapes();;
 
 	...
 });</code>
 					</div>
 					<p>
-					Here we are creating a new <code>canvasEventHelper</code>, and letting it know which context its going to be working on.  After that its simply just a matter of telling it which shapes to draw (recognise drum1?  Thats the one we looked at in the steps above - the others are just more of the same).
+					Here we are creating a new <code>canvasEventHelper</code> object, and letting it know which context its going to be working on and which shapes it should draw (recognise drum1?  Thats the one we looked at in the steps above - the others are just more of the same).
 					<br /><br />
 					Finally we tell it to <code>drawShapes()</code> so that there is something on screen when the page displays to the user.
 					</p>

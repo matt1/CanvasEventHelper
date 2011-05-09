@@ -1,0 +1,11 @@
+h1. CanvasEventHelper
+
+_A JavaScript library to help manage events with the HTML 5 canvas tag_
+
+Currently when handling mouse events, such as clicking, on a HTML 5 canvas the current view seems to be work out the coordinates in the canvas space, then do some maths to work out what was supposed to be under that mouse coordinate.  Thats fine and simple for simple things, but gets tiresome for non-simplethings and is frankly *not good enough*.
+
+CanvasEventHelper tries to help with this by allowing you to encapsulate your canvas shapes into an object.  With this object, you specify what is to be drawn as usual (e.g. rect, lineTo etc) as well as what you want to happen when an event happens.  You then tell the CanvasEventHelper about your objects and let it handle the rest.
+
+h2. License
+
+MIT

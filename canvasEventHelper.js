@@ -27,13 +27,13 @@ THE SOFTWARE.
 /**
  * Helper for handling canvas mouse events
  */
-function canvasEventHelper() {
+function canvasEventHelper(pProperties) {
 	
 	/** Array to hold variable shapes that are to be handled by this helper */
-	this.eventAwareShapes;
+	this.eventAwareShapes = getProperty(pProperties, "eventAwareShapes");
 	
 	/** Canvas context to be used for helper */
-	this.context;
+	this.context = getProperty(pProperties, "context");
 	
 	/** Cordinates of last mouse click */
 	this.lastX, this.lastY;
@@ -52,6 +52,7 @@ function canvasEventHelper() {
 	this.onClick = function(pX, pY) {
 		this.lastX = pX;
 		this.lastY = pY;
+		
 		this.drawShapes();
 		
 		// Clear event details
@@ -63,16 +64,16 @@ function canvasEventHelper() {
 /**
  *	Shape that can be clicked
  */
-function clickableShape(properties) {
+function clickableShape(pProperties) {
 
 	/** Function used to draw the shape */
-	this.drawFunction = properties["drawFunction"];
+	this.drawFunction = getProperty(pProperties, "drawFunction");
 	
 	/** Option to use to close the path - e.g. closePath(), fillRect(), stroke() etc */
-	this.closeFunction = properties["closeFunction"];
+	this.closeFunction = getProperty(pProperties, "closeFunction");
 	
 	/** Method caled when this shape has been clicked */
-	this.clickFunction = properties["clickFunction"];
+	this.clickFunction = getProperty(pProperties, "clickFunction");
 	
 	/** Called before the draw() function is called. */
 	this.preDraw = function(pContext) {
@@ -106,7 +107,7 @@ function clickableShape(properties) {
 			}
 			
 			if (this.closeFunctionDefined()) {
-				this.closeFunction();
+				this.closeFunction(pContext);
 			} else {
 				pContext.closePath();
 			}
@@ -124,8 +125,7 @@ function clickableShape(properties) {
 	/** Checks that a click event handler function has been provided or not */
 	this.clickFunctionDefined = function() {
 		return this.isDefined(this.clickFunction);
-	}
-	
+	}	
 	
 	/** Checks that a path closing function has been provided or not */
 	this.closeFunctionDefined = function() {
@@ -147,4 +147,12 @@ function clickableShape(properties) {
 	
 }
 
+/** Gets a property from an array if it is there, otherwise returns a zero-length string */
+function getProperty(pArray, pProperty) {
+	if (typeof pArray === 'undefined' || typeof pArray[pProperty] === 'undefined') {
+		return null;
+	} else {
+		return pArray[pProperty];
+	}
+}
 

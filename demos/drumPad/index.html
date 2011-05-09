@@ -28,9 +28,10 @@
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
 	
-	canvas {
-		border	: 1px solid #dddddd;
-		padding	: 3px;
+	.canvasWrapper {
+		border	: 1px solid #dddddd;				
+		display: inline-block;
+		padding: 3px;
 	}
 	
 	.codeWrapper {
@@ -174,9 +175,11 @@
 			<br /><br />
 			Go ahead and try clicking on a shape (make sure you'll be able to hear the audio)
 		</p>
-        <canvas id="canvas" width="610" height="51">
-			Sorry, you need support for HTML 5's canvas tag.  Try upgrading your browser.
-        </canvas>
+		<div class="canvasWrapper">
+			<canvas id="canvas" width="610" height="51">
+				Sorry, you need support for HTML 5's canvas tag.  Try upgrading your browser.
+			</canvas>
+		</div>
 		<p>
 		The awesome samples used for this are from <a href="http://www.drumsamples.org/">http://www.drumsamples.org/</a>.
 		</p>

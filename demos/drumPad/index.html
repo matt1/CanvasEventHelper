@@ -1,27 +1,49 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
-    <head>
-		<title>Drum</title>
-		<style>
-			body {
-				font-family: sans-serif;
-			}
-			
-			canvas {
-				border	: 1px solid #dddddd;
-				padding	: 3px;
-			}
-			
-			.codeWrapper {
-				border	: 1px solid #dddddd;				
-				padding	: 3px;
-				width	: 80em;
-			}
-			
-			code {
-				white-space	: pre-wrap;
-			}
-		</style>
+<head>
+  <meta charset='utf-8'>
+
+  <title>CanvasEventHelper - drum pad demo</title>
+
+  <style type="text/css">
+    body {
+      margin-top: 1.0em;
+      background-color: #fafaff;
+      font-family: Helvetica, Arial, FreeSans, san-serif;
+      color: #000;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+    h1 { font-size: 3.8em; color: #000; margin-bottom: 3px; }
+    h1 .small { font-size: 0.4em; }
+    h1 a { text-decoration: none }
+    h2 { font-size: 1.5em; color: #000; }
+    h3 { text-align: center; color: #000; }
+    a { color: #000; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+    pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+	
+	canvas {
+		border	: 1px solid #dddddd;
+		padding	: 3px;
+	}
+	
+	.codeWrapper {
+		border	: 1px solid #dddddd;				
+		padding	: 3px;
+		width	: 45em;
+	}
+	
+	code {
+		white-space	: pre-wrap;
+	}
+  </style>
+  
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
         <script src="https://github.com/matt1/CanvasEventHelper/raw/master/canvasEventHelper.js"></script>
 		<script>
@@ -122,9 +144,25 @@
 			
 			
         </script>
-    </head>
-    <body>
-		<h1>Simplest "onClick" Canvas Event Helper Demo</h1>
+</head>
+
+<body>
+  <a href="http://github.com/matt1/CanvasEventHelper"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+    <div class="download">
+      <a href="http://github.com/matt1/CanvasEventHelper/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/matt1/CanvasEventHelper/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+    </div>
+
+    <h1><a href="http://github.com/matt1/CanvasEventHelper">CanvasEventHelper</a>
+      <span class="small">by <a href="http://github.com/matt1">matt1</a></span></h1>
+		
+		<a href="http://matt1.github.com/CanvasEventHelper/">&lt; Home</a>
+		
+		<h2>Simplest "onClick" Canvas Event Helper Demo</h2>
 		<p>
 			This demo shows possibly the simplest demo of the Canvas Event Helper in action - we draw a couple of simple shapes on the canvas then make each of them play a HTML 5 audio tag when they are clicked.  (Please note that currently browsers will not starting playing an audio tag again if it is already playing - this means that it might appear that the click hasn't been registered if you repeatedly click on the same shape - dont worry, it has been registered it is just that the browser is waiting for the current sample to finish playing before it allows it to be started agian.)
 			<br/>
@@ -264,6 +302,16 @@
 		<audio id="audioDrum">
 			<source src="kickdrum16.ogg" />  
 			<source src="kickdrum16.wav" />				
-		</audio>		
+		</audio>	
+
+  </div>
+
+  
+</body>
+</html>
+
+    </head>
+    <body>
+			
     </body>
 </html>
